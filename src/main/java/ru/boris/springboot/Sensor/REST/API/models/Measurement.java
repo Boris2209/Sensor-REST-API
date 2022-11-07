@@ -27,7 +27,7 @@ public class Measurement {
 
     @ManyToOne
     @JoinColumn(name = "sensor_id", referencedColumnName = "id")
-    @NotEmpty(message = "Name should not be empty")
+    @NotNull(message = "Name should not be empty")
     private Sensor sensor;
 
     @Column(name = "temperature")
