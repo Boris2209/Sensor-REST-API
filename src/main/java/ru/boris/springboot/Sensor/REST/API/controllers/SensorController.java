@@ -12,6 +12,7 @@ import ru.boris.springboot.Sensor.REST.API.models.Sensor;
 import ru.boris.springboot.Sensor.REST.API.services.SensorService;
 import ru.boris.springboot.Sensor.REST.API.util.ErrorResponse;
 import ru.boris.springboot.Sensor.REST.API.util.SensorNotCreatedException;
+import ru.boris.springboot.Sensor.REST.API.util.SensorValidator;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,18 +22,20 @@ import java.util.List;
 public class SensorController {
 
     private final SensorService sensorService;
-
     private final ModelMapper modelMapper;
+    private final SensorValidator sensorValidator;
 
     @Autowired
-    public SensorController(SensorService sensorService, ModelMapper modelMapper) {
+    public SensorController(SensorService sensorService, ModelMapper modelMapper, SensorValidator sensorValidator) {
         this.sensorService = sensorService;
         this.modelMapper = modelMapper;
+        this.sensorValidator = sensorValidator;
     }
 
     @PostMapping("/registration")
     public ResponseEntity<HttpStatus> registration(@RequestBody @Valid SensorDTO sensorDTO,
                                                    BindingResult bindingResult) {
+        sensorValidator.validate(sensorDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             StringBuilder errorsMsg = new StringBuilder();

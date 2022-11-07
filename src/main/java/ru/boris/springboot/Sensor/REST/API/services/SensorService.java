@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.boris.springboot.Sensor.REST.API.models.Sensor;
 import ru.boris.springboot.Sensor.REST.API.repositories.SensorRepositopy;
 
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 public class SensorService {
@@ -19,5 +21,9 @@ public class SensorService {
     @Transactional
     public void save(Sensor sensor) {
         sensorRepositopy.save(sensor);
+    }
+
+    public Optional<Sensor> findByName(String name) {
+        return sensorRepositopy.findByName(name);
     }
 }
