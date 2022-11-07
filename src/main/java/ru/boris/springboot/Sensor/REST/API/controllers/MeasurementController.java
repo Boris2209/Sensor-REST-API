@@ -15,8 +15,12 @@ import ru.boris.springboot.Sensor.REST.API.util.MeasurementNotAddException;
 import ru.boris.springboot.Sensor.REST.API.util.MeasurementValidator;
 import ru.boris.springboot.Sensor.REST.API.util.SensorNotCreatedException;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -36,6 +40,13 @@ public class MeasurementController {
     @GetMapping()
     public List<MeasurementDTO> getMeasurements() {
         return measurementService.findAll().stream().map(this::convertToMeasurementDTO).collect(Collectors.toList());
+    }
+
+    @GetMapping("/rainyDaysCount")
+    public Map<String, Integer> getCountRainingDay() {
+        Map<String, Integer> count = new HashMap<>();
+        count.put("Count", measurementService.countRuiningDay());
+        return count;
     }
 
     @PostMapping("/add")

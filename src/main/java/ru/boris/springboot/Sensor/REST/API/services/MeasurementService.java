@@ -35,4 +35,8 @@ public class MeasurementService {
         measurement.setMeasurementTime(LocalDateTime.now());
         measurementRepository.save(measurement);
     }
+
+    public Integer countRuiningDay() {
+        return measurementRepository.countMeasurementsByRainingTrue();
+    }
 }
