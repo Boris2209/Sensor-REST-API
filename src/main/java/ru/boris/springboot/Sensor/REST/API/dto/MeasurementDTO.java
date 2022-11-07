@@ -15,9 +15,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class MeasurementDTO {
 
-    @NotEmpty(message = "Name should not be empty")
-    private SensorDTO sensor;
-
     @Min(-100)
     @Max(100)
     @NotNull
@@ -25,4 +22,7 @@ public class MeasurementDTO {
 
     @NotNull
     private boolean raining;
+
+    @NotEmpty(message = "Name should not be empty")
+    private SensorDTO sensor;
 }
