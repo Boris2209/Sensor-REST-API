@@ -1,4 +1,4 @@
-package ru.boris.springboot.Sensor.REST.API.models.dto;
+package ru.boris.springboot.Sensor.REST.API.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 public class MeasurementDTO {
 
     @NotEmpty(message = "Name should not be empty")
-    private Sensor sensor;
+    private SensorDTO sensor;
 
     @Min(-100)
     @Max(100)

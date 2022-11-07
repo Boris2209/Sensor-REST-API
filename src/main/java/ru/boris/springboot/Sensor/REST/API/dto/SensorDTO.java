@@ -1,4 +1,4 @@
-package ru.boris.springboot.Sensor.REST.API.models.dto;
+package ru.boris.springboot.Sensor.REST.API.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
