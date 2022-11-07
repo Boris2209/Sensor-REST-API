@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.boris.springboot.Sensor.REST.API.dto.MeasurementDTO;
 import ru.boris.springboot.Sensor.REST.API.models.Measurement;
 import ru.boris.springboot.Sensor.REST.API.services.MeasurementService;
+import ru.boris.springboot.Sensor.REST.API.util.ErrorResponse;
 import ru.boris.springboot.Sensor.REST.API.util.MeasurementNotAddException;
+import ru.boris.springboot.Sensor.REST.API.util.MeasurementValidator;
 import ru.boris.springboot.Sensor.REST.API.util.SensorNotCreatedException;
 
 import javax.validation.Valid;
@@ -22,11 +24,13 @@ import java.util.stream.Collectors;
 public class MeasurementController {
     private final MeasurementService measurementService;
     private final ModelMapper modelMapper;
+    private final MeasurementValidator measurementValidator;
 
     @Autowired
-    public MeasurementController(MeasurementService measurementService, ModelMapper modelMapper) {
+    public MeasurementController(MeasurementService measurementService, ModelMapper modelMapper, MeasurementValidator measurementValidator) {
         this.measurementService = measurementService;
         this.modelMapper = modelMapper;
+        this.measurementValidator = measurementValidator;
     }
 
     @GetMapping()
@@ -37,6 +41,8 @@ public class MeasurementController {
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> add(@RequestBody @Valid MeasurementDTO measurementDTO,
                                           BindingResult bindingResult) {
+
+        measurementValidator.validate(measurementDTO, bindingResult);
 
         Measurement measurementAdd = convertToMeasurement(measurementDTO);
 
@@ -56,11 +62,17 @@ public class MeasurementController {
     }
 
     private Measurement convertToMeasurement(MeasurementDTO measurementDTO) {
-        System.out.println(measurementDTO);
         return modelMapper.map(measurementDTO, Measurement.class);
     }
 
     private MeasurementDTO convertToMeasurementDTO (Measurement measurement) {
         return modelMapper.map(measurement, MeasurementDTO.class);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handleException(MeasurementNotAddException e) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMessage(e.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }
