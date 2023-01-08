@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.boris.springboot.Sensor.REST.API.models.Sensor;
-import ru.boris.springboot.Sensor.REST.API.repositories.SensorRepositopy;
+import ru.boris.springboot.Sensor.REST.API.repositories.SensorRepository;
 
 import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
 public class SensorService {
-    private final SensorRepositopy sensorRepositopy;
+    private final SensorRepository sensorRepositopy;
 
     @Autowired
-    public SensorService(SensorRepositopy sensorRepositopy) {
+    public SensorService(SensorRepository sensorRepositopy) {
         this.sensorRepositopy = sensorRepositopy;
     }
 

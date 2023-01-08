@@ -57,10 +57,5 @@ public class SensorController {
         return modelMapper.map(sensorDTO, Sensor.class);
     }
 
-    @ExceptionHandler
-    private ResponseEntity<ErrorResponse> handleException(SensorNotCreatedException e) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMessage(e.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
+
 }
